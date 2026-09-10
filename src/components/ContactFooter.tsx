@@ -71,7 +71,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onPrint }) => {
             <p className="text-base font-bold text-white">{personalInfo.name} ({personalInfo.englishName})</p>
             <p className="text-xs text-neutral-400">{personalInfo.role} · {personalInfo.grade}</p>
             <p className="text-xs text-neutral-400">{personalInfo.payGrade}</p>
-            <p className="text-xs font-mono text-neutral-500">최초 임용일: {personalInfo.appointmentDate}</p>
+            <p className="text-xs text-neutral-400">초등특수학급, 특수학교, 인지치료</p>
           </div>
 
           {/* Column 2: Affiliation & Office */}

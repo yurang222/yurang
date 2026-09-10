@@ -42,11 +42,10 @@ export const AboutSection: React.FC = () => {
         {/* Large Bold Editorial Statement matching reference typography */}
         <div className="mt-3 mb-10 max-w-5xl">
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#111111] leading-[1.25] tracking-tight">
-            우리 아이가 자신만의 속도로 자라는 교실을 만듭니다.
+            자신만의 속도로 자라는 교실
           </h2>
           <p className="mt-6 text-base sm:text-lg text-neutral-700 leading-relaxed max-w-4xl font-normal">
-            공립 초등특수학급 담임교사로 9년 이상의 현장 경험을 쌓아오며, 단국대학교 특수교육대학원 석사 과정(평점 4.41/4.5)을 통해 이론적 깊이를 더했습니다. 
-            생성형 AI와 캔바(Canva)를 활용한 수준별 맞춤형 교수자료 제작, 긍정적 행동지원(PBS)과 하루 10분 감정 리추얼을 통해 학생의 자존감과 자기조절력을 키우는 수업을 실천하고 있습니다.
+            10년차 공립초등특수학급 담임교사입니다. 초등특수교육 석사 과정을 통해 이론적 깊이를 더했습니다. 학생 개별 맞춤형 교수자료를 활용한 개별화교육, 긍정적 행동지원 기반 생활지도를 통해 생각의 깊이와 자기조절력을 넓혀 나갑니다.
           </p>
         </div>
 

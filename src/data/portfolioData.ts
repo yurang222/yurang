@@ -9,7 +9,7 @@ export const personalInfo: PersonalInfo = {
   districtOffice: '서울특별시북부교육지원청',
   cityOffice: '서울특별시교육청',
   position: '담임교사',
-  payGrade: '20호봉 (2026년 기준)',
+  payGrade: '10년차(2026년 기준)',
   appointmentDate: '2019.03.01',
   totalExperience: '10년차',
   email: 'kessong77@sen.go.kr',

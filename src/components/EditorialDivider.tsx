@@ -25,8 +25,11 @@ export const EditorialDivider: React.FC = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 sm:py-12">
         <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[460px] rounded-lg overflow-hidden border border-black/20 bg-neutral-200 shadow-sm">
           <img
-            src="/src/assets/images/sel_creative_desk_1789033579632.jpg"
-            alt="사회정서학습 감정 카드와 디지털 교수자료 책상"
+            src="/src/assets/images/little_cat_wallpaper.jpg"
+            onError={(e) => {
+              e.currentTarget.src = 'https://raw.githubusercontent.com/yurang222/yurang/cc6d425d09bd32940aaab82d1b96855617f9252c/Little_cat_im_hungry-Animal_Photo_HD_Wallpaper_1366x768.jpg';
+            }}
+            alt="Little cat"
             className="w-full h-full object-cover object-center filter saturate-[0.95] contrast-[1.02]"
             referrerPolicy="no-referrer"
           />

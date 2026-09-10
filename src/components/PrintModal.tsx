@@ -65,7 +65,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({ isOpen, onClose }) => {
               <div><span className="font-bold text-neutral-500">직교구분 / 직급:</span> {personalInfo.grade}</div>
               <div><span className="font-bold text-neutral-500">소속:</span> {personalInfo.school}</div>
               <div><span className="font-bold text-neutral-500">보직:</span> {personalInfo.position}</div>
-              <div><span className="font-bold text-neutral-500">호봉:</span> {personalInfo.payGrade}</div>
+              <div><span className="font-bold text-neutral-500">경력(기준):</span> {personalInfo.payGrade}</div>
               <div><span className="font-bold text-neutral-500">최초 임용일:</span> {personalInfo.appointmentDate}</div>
               <div className="col-span-2"><span className="font-bold text-neutral-500">연락처(이메일):</span> {personalInfo.email}</div>
               <div><span className="font-bold text-neutral-500">총 경력:</span> {personalInfo.totalExperience}</div>

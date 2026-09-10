@@ -51,14 +51,14 @@ export const HeroSection: React.FC = () => {
               특수학교(초등) 정교사 1급
             </span>
             <span className="px-3 py-1 rounded-full bg-black/5 border border-black/10">
-              단국대 특수교육대학원 석사 (평점 4.41/4.5)
+              단국대 특수교육대학원 석사
             </span>
             <span className="px-3 py-1 rounded-full bg-black/5 border border-black/10">
               10년차 초등특수교사
             </span>
           </div>
           <div className="text-neutral-500 font-mono text-[11px]">
-            최초 임용일: 2019.03.01 · 총 경력 9년+
+            서울특별시교육청 소속 · 10년차
           </div>
         </div>
       </div>
