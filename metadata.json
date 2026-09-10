@@ -1,0 +1,6 @@
+{
+  "name": "송경은 특수교사 포트폴리오",
+  "description": "서울백운초등학교 초등특수학급 담임교사 송경은의 전문성, 경력, 연수 및 핵심 역량 포트폴리오",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

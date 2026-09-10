@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>강북 AI 교육 - AI 1주차 실습1: Market Channel KPI Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+    .title-area h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .title-area p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background-color: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #60a5fa;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+    .file-uploader-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px dashed var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .file-uploader-box input[type="file"] {
+      display: none;
+    }
+    .btn {
+      background-color: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background-color: #2563eb;
+    }
+    .grid-kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .kpi-card .label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .kpi-card .value {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 8px 0;
+      color: #ffffff;
+    }
+    .kpi-card .trend {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .trend.positive { color: var(--accent-green); }
+    .trend.neutral { color: var(--accent-amber); }
+    .grid-charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 640px) {
+      .grid-charts {
+        grid-template-columns: 1fr;
+      }
+    }
+    .chart-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .chart-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #f1f5f9;
+    }
+    .table-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+    .table-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #f1f5f9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    th {
+      background-color: rgba(255, 255, 255, 0.03);
+      padding: 12px 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+    }
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+    .notice-bar {
+      background-color: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="dashboardContainer">
+    <!-- Notice Bar -->
+    <div class="notice-bar">
+      <div>
+        <strong>📌 강북 AI 교육 AI 1주차 실습 1</strong> : 마케팅 채널 KPI 대시보드 (<code>market_channel_kpi.html</code>)
+      </div>
+      <div class="file-uploader-box">
+        <span>로컬 파일 직접 불러오기:</span>
+        <label for="localFileInput" class="btn">내 HTML 파일 열기</label>
+        <input type="file" id="localFileInput" accept=".html,.htm" />
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <div class="title-area">
+        <div>
+          <span class="badge">AI 교육 1주차 실습 과제</span>
+          <span class="badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34d399;">Active Analytics</span>
+        </div>
+        <h1>마케팅 채널 성과 & KPI 종합 대시보드</h1>
+        <p>채널별 유입, 전환율(CVR), 고객 획득 비용(CAC), 광고 수익률(ROAS) 데이터 분석 모델</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 12px; color: var(--text-muted);">수강생: 특수교사 송경은</div>
+        <div style="font-size: 11px; color: #64748b; font-family: monospace; margin-top: 2px;">market_channel_kpi.html</div>
+      </div>
+    </header>
+
+    <!-- KPI Cards -->
+    <div class="grid-kpi">
+      <div class="kpi-card">
+        <div class="label">총 유입 수 (Sessions)</div>
+        <div class="value">148,250</div>
+        <div class="trend positive">▲ 14.8% 전월 대비</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">전체 전환율 (Average CVR)</div>
+        <div class="value">3.82%</div>
+        <div class="trend positive">▲ 0.6%p 개선</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">평균 고객획득비용 (CAC)</div>
+        <div class="value">₩18,400</div>
+        <div class="trend positive">▼ 12.3% 절감</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">통합 ROAS</div>
+        <div class="value">412%</div>
+        <div class="trend positive">▲ 38% 목표 초과</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid-charts">
+      <div class="chart-card">
+        <h3>채널별 유입 세션 비중 (Channel Traffic)</h3>
+        <canvas id="trafficChart" height="240"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>채널별 전환율 및 ROAS 비교</h3>
+        <canvas id="roasChart" height="240"></canvas>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <h3>채널별 세부 성과 지표 (Detailed KPI Metrics)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>채널명 (Channel)</th>
+            <th>지출 비용 (Cost)</th>
+            <th>유입 세션 (Sessions)</th>
+            <th>전환 건수 (Conversions)</th>
+            <th>전환율 (CVR)</th>
+            <th>CAC (고객획득비용)</th>
+            <th>ROAS</th>
+            <th>성과 등급</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>검색 광고 (Search Ads)</strong></td>
+            <td>₩4,200,000</td>
+            <td>52,300</td>
+            <td>2,450</td>
+            <td>4.68%</td>
+            <td>₩1,714</td>
+            <td>480%</td>
+            <td><span style="color: #34d399; font-weight: bold;">최우수 (S)</span></td>
+          </tr>
+          <tr>
+            <td><strong>소셜 미디어 (Social Media)</strong></td>
+            <td>₩3,500,000</td>
+            <td>41,800</td>
+            <td>1,320</td>
+            <td>3.16%</td>
+            <td>₩2,651</td>
+            <td>390%</td>
+            <td><span style="color: #60a5fa; font-weight: bold;">우수 (A)</span></td>
+          </tr>
+          <tr>
+            <td><strong>오가닉 검색 / 블로그 (SEO/Content)</strong></td>
+            <td>₩800,000</td>
+            <td>32,150</td>
+            <td>1,210</td>
+            <td>3.76%</td>
+            <td>₩661</td>
+            <td>620%</td>
+            <td><span style="color: #34d399; font-weight: bold;">최우수 (S)</span></td>
+          </tr>
+          <tr>
+            <td><strong>디스플레이 배너 (Display Ads)</strong></td>
+            <td>₩2,100,000</td>
+            <td>14,200</td>
+            <td>310</td>
+            <td>2.18%</td>
+            <td>₩6,774</td>
+            <td>240%</td>
+            <td><span style="color: #fbbf24; font-weight: bold;">보통 (B)</span></td>
+          </tr>
+          <tr>
+            <td><strong>이메일 / CRM 리타겟팅</strong></td>
+            <td>₩450,000</td>
+            <td>7,800</td>
+            <td>370</td>
+            <td>4.74%</td>
+            <td>₩1,216</td>
+            <td>510%</td>
+            <td><span style="color: #34d399; font-weight: bold;">최우수 (S)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Traffic Chart
+    const ctx1 = document.getElementById('trafficChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'doughnut',
+      data: {
+        labels: ['검색 광고', '소셜 미디어', '오가닉/콘텐츠', '디스플레이 배너', 'CRM/이메일'],
+        datasets: [{
+          data: [52300, 41800, 32150, 14200, 7800],
+          backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 12 } } }
+        }
+      }
+    });
+
+    // ROAS Chart
+    const ctx2 = document.getElementById('roasChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['검색 광고', '소셜 미디어', '오가닉/콘텐츠', '디스플레이', 'CRM/이메일'],
+        datasets: [
+          {
+            label: 'ROAS (%)',
+            data: [480, 390, 620, 240, 510],
+            backgroundColor: '#3b82f6',
+            borderRadius: 6
+          },
+          {
+            label: '전환율 (CVR x100 %)',
+            data: [468, 316, 376, 218, 474],
+            backgroundColor: '#10b981',
+            borderRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 12 } } }
+        },
+        scales: {
+          x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+          y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+        }
+      }
+    });
+
+    // Local file loader
+    document.getElementById('localFileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.open();
+          document.write(evt.target.result);
+          document.close();
+        };
+        reader.readAsText(file);
+      }
+    });
+  </script>
+</body>
+</html>
